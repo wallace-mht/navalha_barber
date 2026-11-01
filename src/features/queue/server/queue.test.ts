@@ -1,29 +1,48 @@
 import { describe, expect, it } from "vitest";
-import { getQueueDisplayState } from "./domain";
+import { getQueueDisplayState, QUEUE_STALE_AFTER_MINUTES } from "./domain";
 
-describe("Queue Domain Rules", () => {
-  const now = new Date("2026-11-01T12:00:00Z");
+const now = new Date("2026-11-01T12:00:00Z");
+const minutesAgo = (m: number) => new Date(now.getTime() - m * 60_000);
 
-  it("returns outdated when status is older than 2 hours", () => {
-    const oldDate = new Date("2026-11-01T09:00:00Z"); // 3 hours ago
-    const result = getQueueDisplayState(oldDate, "normal", 20, now);
-    expect(result.isOutdated).toBe(true);
-    expect(result.label).toBe("Status desatualizado");
-    expect(result.minutes).toBeNull();
+describe("getQueueDisplayState", () => {
+  it("mostra desatualizado depois de 120 min, sem minutos", () => {
+    const r = getQueueDisplayState("normal", 20, minutesAgo(180), now);
+    expect(r.isOutdated).toBe(true);
+    expect(r.label).toBe("Status desatualizado");
+    expect(r.minutes).toBeNull();
   });
 
-  it("returns correct normal state when fresh", () => {
-    const recentDate = new Date("2026-11-01T11:30:00Z"); // 30 min ago
-    const result = getQueueDisplayState(recentDate, "normal", 15, now);
-    expect(result.isOutdated).toBe(false);
-    expect(result.label).toBe("Fila normal");
-    expect(result.minutes).toBe(15);
+  it("borda: exatamente 120 min ainda é atual; 120 min e 1 s já é desatualizado", () => {
+    expect(getQueueDisplayState("normal", 20, minutesAgo(QUEUE_STALE_AFTER_MINUTES), now).isOutdated).toBe(false);
+    const justOver = new Date(now.getTime() - (QUEUE_STALE_AFTER_MINUTES * 60_000 + 1000));
+    expect(getQueueDisplayState("normal", 20, justOver, now).isOutdated).toBe(true);
   });
 
-  it("returns empty state correctly", () => {
-    const recentDate = new Date("2026-11-01T11:55:00Z");
-    const result = getQueueDisplayState(recentDate, "empty", 0, now);
-    expect(result.label).toBe("Sem fila");
-    expect(result.minutes).toBe(0);
+  it("mostra fila normal com os minutos quando está atual", () => {
+    const r = getQueueDisplayState("normal", 15, minutesAgo(30), now);
+    expect(r.label).toBe("Fila normal");
+    expect(r.minutes).toBe(15);
+  });
+
+  it("mostra sem fila", () => {
+    const r = getQueueDisplayState("empty", 0, minutesAgo(5), now);
+    expect(r.label).toBe("Sem fila");
+    expect(r.minutes).toBe(0);
+  });
+
+  it("pausa e fechado não mostram minutos", () => {
+    expect(getQueueDisplayState("paused", 10, minutesAgo(5), now).minutes).toBeNull();
+    expect(getQueueDisplayState("closed", 10, minutesAgo(5), now).minutes).toBeNull();
+  });
+
+  it("relógio adiantado (atualização no futuro) não vira desatualizado", () => {
+    const future = new Date(now.getTime() + 5 * 60_000);
+    expect(getQueueDisplayState("normal", 20, future, now).isOutdated).toBe(false);
+  });
+
+  it("estado desconhecido nunca é apresentado como fila normal", () => {
+    const r = getQueueDisplayState("qualquer-coisa", 20, minutesAgo(5), now);
+    expect(r.label).toBe("Status indisponível");
+    expect(r.minutes).toBeNull();
   });
 });

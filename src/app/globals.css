@@ -1,17 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --noite: #0c1d16;
-  --floresta: #1f3d32;
-  --offwhite: #faf7f1;
-  --nevoa: #b9c7bf;
-  --brasa: #e6be8c;
+@theme {
+  --color-noite: #0c1d16;
+  --color-floresta: #1f3d32;
+  --color-offwhite: #faf7f1;
+  --color-nevoa: #b9c7bf;
+  --color-brasa: #e6be8c;
+  --color-caramelo: #c49a6c;
+  --color-vidro: rgb(250 247 241 / 0.06);
+  --color-vidro-borda: rgb(250 247 241 / 0.14);
+  --radius-painel: 2rem;
+  --radius-cartao: 1.25rem;
+  --font-sans: var(--font-outfit), system-ui, sans-serif;
 }
 
 body {
-  background-color: var(--noite);
-  color: var(--offwhite);
-  font-family: 'Outfit', sans-serif;
+  background-color: var(--color-noite);
+  color: var(--color-offwhite);
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brasa);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }

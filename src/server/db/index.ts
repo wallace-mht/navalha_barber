@@ -1,19 +1,18 @@
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
+import { getEnv } from "@/lib/env";
 import * as schema from "./schema";
 
-// Cliente de banco genérico para conexões gerais ou migrações
-const connectionString = process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:5432/barbearia";
+type Db = ReturnType<typeof create>;
 
-const sql = neon(connectionString);
-export const db = drizzle(sql, { schema });
+function create() {
+  return drizzle(neon(getEnv().DATABASE_URL), { schema });
+}
 
-// Helper para consultas multi-tenant isoladas por shopId
-export function tenantDb(shopId: string) {
-  // Retorna um proxy ou helper que injeta o shopId nas queries se necessário,
-  // ou encapsula as chamadas garantindo o isolamento.
-  return {
-    shopId,
-    // Futuras queries filtradas automaticamente podem ser adicionadas aqui
-  };
+let instance: Db | undefined;
+
+/** Conexão criada sob demanda: importar este módulo não abre conexão nem lê variáveis. */
+export function getDb(): Db {
+  instance ??= create();
+  return instance;
 }
