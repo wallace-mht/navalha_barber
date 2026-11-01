@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Barbearia Demo | Referência visual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--noite:#0c1d16;--floresta:#1f3d32;--offwhite:#faf7f1;--nevoa:#b9c7bf;--brasa:#e6be8c;--caramelo:#c49a6c;--caramelo-escuro:#8a6236;--grafite:#3e3a36;--bege:#eadccb;
+--vidro:rgb(250 247 241/.06);--borda:rgb(250 247 241/.14);--acento:var(--brasa);--acento-texto:var(--noite);--livre:#7fd8a6;--cheia:#f2a15f;--pausa:#9fb0a8;
+--bg:var(--noite);--tx:var(--offwhite);--tx2:var(--nevoa);--painel:var(--vidro)}
+@media (prefers-color-scheme:light){:root{--bg:var(--offwhite);--tx:var(--grafite);--tx2:#6b5f55;--painel:rgb(234 220 203/.6);--borda:rgb(62 58 54/.15);--acento:var(--floresta);--acento-texto:var(--offwhite)}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 16px/1.55 Outfit,system-ui,sans-serif;font-variant-numeric:tabular-nums;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+radial-gradient(circle at 85% -10%,transparent 38%,rgb(196 154 108/.18) 38.2%,transparent 38.6%),
+radial-gradient(circle at 85% -10%,transparent 52%,rgb(196 154 108/.12) 52.2%,transparent 52.6%)}
+:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+a{color:inherit}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 20px;background:rgb(12 29 22/.7);backdrop-filter:blur(14px);border-bottom:1px solid var(--borda)}
+@media (prefers-color-scheme:light){header{background:rgb(250 247 241/.8)}}
+.marca{display:flex;align-items:center;gap:12px;font-weight:500;text-decoration:none}
+.logo{width:44px;height:44px;border-radius:14px;background:var(--floresta);display:grid;place-items:center;color:var(--brasa)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 24px;border-radius:9999px;border:0;font:500 16px Outfit,sans-serif;text-decoration:none;cursor:pointer;background:var(--acento);color:var(--acento-texto);transition:transform .15s}
+.btn:active{transform:scale(.98)}.btn.sec{background:var(--floresta);color:var(--offwhite)}
+main{display:grid;gap:12px;padding:12px}
+.painel{border-radius:2rem;background:var(--painel);border:1px solid var(--borda);padding:28px 22px}
+@media (min-width:768px){main{padding:16px;gap:16px}.painel{padding:48px}}
+.hero{display:grid;gap:28px;align-items:center}
+@media (min-width:900px){.hero{grid-template-columns:1.1fr .9fr}}
+h1,h2{font-weight:300;letter-spacing:-.02em;margin:0;line-height:1.05}
+h1{font-size:clamp(36px,6vw,64px)}h2{font-size:clamp(28px,4vw,40px)}
+.apoio{color:var(--tx2);font-size:14px}
+.anel{position:relative;width:min(100%,340px);aspect-ratio:1;margin:0 auto}
+.anel svg{width:100%;height:100%;transform:rotate(-90deg)}
+.trilho{fill:none;stroke:var(--borda);stroke-width:6}
+.arco{fill:none;stroke:var(--brasa);stroke-width:6;stroke-linecap:round;stroke-dasharray:565;stroke-dashoffset:565;animation:desenha .9s ease-out .15s forwards;filter:drop-shadow(0 0 8px rgb(230 190 140/.55))}
+@keyframes desenha{to{stroke-dashoffset:var(--resto)}}
+.centro{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.min{font-size:clamp(72px,16vw,112px);font-weight:300;line-height:1;letter-spacing:-.03em}
+.estado{display:inline-flex;gap:8px;align-items:center;justify-content:center;font-weight:500;color:var(--brasa)}
+.barbeiros{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+.mini{border-radius:1.25rem;border:1px solid var(--borda);padding:12px;text-align:center}
+.mini b{display:block;font-weight:300;font-size:28px}.mini span{font-size:13px;color:var(--tx2)}
+.filtros{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 24px}
+.filtros label{cursor:pointer}.filtros input{position:absolute;opacity:0}
+.filtros span{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:9999px;border:1px solid var(--borda)}
+.filtros input:checked+span{background:var(--acento);color:var(--acento-texto);border-color:transparent}
+.filtros input:focus-visible+span{outline:2px solid var(--acento);outline-offset:3px}
+.grade{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.corte{all:unset;box-sizing:border-box;cursor:pointer;border-radius:1.25rem;border:1px solid var(--borda);background:var(--painel);padding:10px;display:block}
+.corte:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.foto{height:150px;border-radius:1rem;background:linear-gradient(140deg,var(--c1),var(--c2));display:grid;place-items:end start;padding:10px;color:rgb(250 247 241/.85);font-size:12px}
+.corte h3{margin:12px 6px 0;font-size:18px;font-weight:500}.corte p{margin:2px 6px 8px;font-size:14px;color:var(--tx2)}
+dialog{border:1px solid var(--borda);border-radius:2rem;background:var(--floresta);color:var(--offwhite);padding:24px;width:min(560px,92vw)}
+dialog::backdrop{background:rgb(12 29 22/.7);backdrop-filter:blur(6px)}
+.comp{position:relative;height:260px;border-radius:1rem;overflow:hidden;margin:16px 0}
+.comp div{position:absolute;inset:0;display:grid;place-items:end start;padding:14px;font-size:13px}
+.antes{background:linear-gradient(140deg,#5b4a3a,#3b2f26)}.depois{background:linear-gradient(140deg,#c49a6c,#1f3d32);clip-path:inset(0 0 0 var(--p,50%))}
+.comp input{position:absolute;left:0;right:0;bottom:8px;width:100%;accent-color:var(--brasa)}
+footer{padding:24px;color:var(--tx2);font-size:14px}
+@media (prefers-reduced-motion:reduce){.arco{animation:none;stroke-dashoffset:var(--resto)}.btn{transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="marca" href="#"><span class="logo" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 9 9"/></svg></span>Barbearia Demo</a>
+  <a class="btn" href="#">Chamar no WhatsApp</a>
+</header>
+<main>
+  <section class="painel hero" aria-labelledby="t-fila">
+    <div>
+      <p class="apoio">Rua das Flores, 120, Parnaíba</p>
+      <h1 id="t-fila">Veja a fila antes de sair de casa</h1>
+      <p style="max-width:46ch;color:var(--tx2);margin:18px 0 26px">Escolha o corte, confira quanto tempo falta e reserve o horário com o barbeiro que você prefere.</p>
+      <a class="btn" href="#cortes">Ver estilos</a> <a class="btn sec" href="#">Reservar horário</a>
+    </div>
+    <div>
+      <div class="anel" role="img" aria-label="Fila normal, cerca de 20 minutos de espera. Atualizado há 8 minutos.">
+        <svg viewBox="0 0 200 200" aria-hidden="true"><circle class="trilho" cx="100" cy="100" r="90"/><circle class="arco" cx="100" cy="100" r="90" style="--resto:377"/></svg>
+        <div class="centro"><div class="min">20<span style="font-size:.28em;color:var(--tx2)"> min</span></div>
+          <div class="estado"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"/></svg>Fila normal</div>
+          <div class="apoio">Atualizado há 8 min</div></div>
+      </div>
+      <div class="barbeiros" aria-label="Espera por barbeiro">
+        <div class="mini"><b>10</b><span>Rafael</span></div><div class="mini"><b>20</b><span>Diego</span></div><div class="mini"><b>35</b><span>Caio</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="painel" id="cortes" aria-labelledby="t-cortes">
+    <h2 id="t-cortes">Estilos de corte</h2>
+    <form class="filtros" role="radiogroup" aria-label="Filtrar por estilo">
+      <label><input type="radio" name="f" value="todos" checked><span>Todos</span></label>
+      <label><input type="radio" name="f" value="classico"><span>Clássico</span></label>
+      <label><input type="radio" name="f" value="degrade"><span>Degradê</span></label>
+      <label><input type="radio" name="f" value="moderno"><span>Moderno</span></label>
+    </form>
+    <p class="apoio" role="status" aria-live="polite" id="contagem"></p>
+    <div class="grade" id="grade"></div>
+  </section>
+</main>
+<footer>Referência visual. Imagens são marcadores de posição; no produto, as fotos vêm do R2 com <code>next/image</code>.</footer>
+
+<dialog id="modal" aria-labelledby="m-titulo">
+  <h2 id="m-titulo" style="font-size:28px"></h2>
+  <p class="apoio" id="m-desc" style="color:var(--nevoa)"></p>
+  <div class="comp"><div class="antes">Antes</div><div class="depois" id="depois">Depois</div>
+    <input type="range" min="0" max="100" value="50" id="slide" aria-label="Comparar antes e depois"></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="#">Reservar este corte</a><button class="btn sec" id="fechar" type="button">Fechar</button></div>
+</dialog>
+
+<script>
+const cortes=[
+["Degradê baixo","degrade","Curto, 35 min","#3f6b58","#1f3d32"],["Social clássico","classico","Curto, 30 min","#8a6236","#3b2f26"],
+["Moicano","moderno","Médio, 45 min","#c49a6c","#1f3d32"],["Americano","classico","Curto, 30 min","#6b5f55","#1f3d32"],
+["Pompadour","moderno","Longo, 50 min","#e6be8c","#3f6b58"],["Degradê navalhado","degrade","Curto, 40 min","#1f3d32","#c49a6c"]];
+const g=document.getElementById("grade"),m=document.getElementById("modal");
+function render(f){const l=cortes.filter(c=>f==="todos"||c[1]===f);
+ g.innerHTML=l.map((c,i)=>`<button class="corte" data-i="${cortes.indexOf(c)}" type="button"><div class="foto" style="--c1:${c[3]};--c2:${c[4]}">foto</div><h3>${c[0]}</h3><p>${c[2]}</p></button>`).join("");
+ document.getElementById("contagem").textContent=l.length+(l.length===1?" estilo encontrado":" estilos encontrados")}
+document.querySelectorAll("input[name=f]").forEach(r=>r.addEventListener("change",e=>render(e.target.value)));
+let ultimo;g.addEventListener("click",e=>{const b=e.target.closest(".corte");if(!b)return;ultimo=b;const c=cortes[b.dataset.i];
+ document.getElementById("m-titulo").textContent=c[0];document.getElementById("m-desc").textContent=c[2]+". Estilo "+c[1]+".";m.showModal()});
+document.getElementById("fechar").onclick=()=>m.close();m.addEventListener("close",()=>ultimo&&ultimo.focus());
+document.getElementById("slide").addEventListener("input",e=>document.getElementById("depois").style.setProperty("--p",e.target.value+"%"));
+render("todos");
+</script>
+</body>
+</html>
